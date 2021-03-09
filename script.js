@@ -1,9 +1,5 @@
 "use strict"
 
-let lettersArray = [];
-let sentenceContainer = document.querySelector(".container");
-let fullSentence = document.querySelector("#cooltext").textContent;
-
 document.addEventListener("DOMContentLoaded", init);
 
 function init() {
@@ -15,16 +11,33 @@ function init() {
 function splitIntoLetters() {
     console.log("Splits word into letters");
 
+    let textSplit;
+    let fullSentence = document.querySelector("#cooltext");
+
+    // Opretter et array og sætter hvert bogstav ind
+    textSplit = fullSentence.textContent.split("");
+    console.log(textSplit);
+
     // Tømmer containeren for tekst
-    sentenceContainer.innerHTML = "";
+    fullSentence.textContent = "";
 
-    // Lægger alle bogstaver ind i array
-    for (let i = 0; i < fullSentence.length; i++) {
-        let letterI = fullSentence.substring(i, i + 1);
+    // For hvert bogstav laves et span element
+    textSplit.forEach((letter, index) => {
 
-        lettersArray.push(letterI);
-    }
+        let animateLetter = document.createElement("span");
+        animateLetter.classList.add("fadewave");
+        animateLetter.style.setProperty("--delay", index);
+
+        // Hvis 'bogstav' er mellemrum indsættes non breakable space
+        if (letter === " ") {
+            animateLetter.innerHTML = "&nbsp;";
+        } else {
+            animateLetter.textContent = letter;
+        }
+
+        // Indsæt span elementerne
+        fullSentence.append(animateLetter);
+    });
 
 }
 
-// Nu skal alle bogstaver ind i sin egen span...
